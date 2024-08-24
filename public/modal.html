@@ -1,0 +1,166 @@
+<section>
+  <style>
+    .container {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      padding: 3rem 1.25rem;
+      margin: auto;
+      max-width: 80rem; /* Equivalent to max-w-7xl */
+    }
+
+    .grid-container {
+      display: grid;
+      grid-template-columns: 1fr;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 28rem;
+      margin: 1rem auto;
+      background-color: white;
+      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.1);
+      border-radius: 0.75rem;
+    }
+
+    .card-content {
+      padding: 1.5rem;
+    }
+
+    .header-text {
+      margin-top: 0.75rem;
+      text-align: left;
+    }
+
+    .security-code {
+      margin-bottom: 2rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      color: #2563EB;
+      text-transform: uppercase;
+    }
+
+    .description {
+      margin-top: 0.5rem;
+      font-size: 1rem;
+      line-height: 1.5;
+      color: #6B7280;
+    }
+
+    .form-group {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 1.5rem;
+    }
+
+    .input-wrapper {
+      position: relative;
+      margin-top: 0.25rem;
+      border-radius: 0.5rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+    }
+
+    .icon {
+      position: absolute;
+      inset-y: 0;
+      left: 0;
+      display: flex;
+      align-items: center;
+      padding-left: 0.75rem;
+      pointer-events: none;
+      color: #9CA3AF;
+    }
+
+    .input {
+      width: 100%;
+      padding: 0.75rem 1.25rem 0.75rem 2.5rem;
+      font-size: 1rem;
+      color: #4B5563;
+      border: none;
+      border-radius: 0.5rem;
+      background-color: #F9FAFB;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .button-decline {
+      display: block;
+      padding: 0.875rem 2.5rem;
+      font-size: 1rem;
+      font-weight: 500;
+      color: #2563EB;
+      text-align: center;
+      border: 2px solid white;
+      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.1);
+      border-radius: 0.75rem;
+      background-color: transparent;
+      transition: all 0.5s ease-in-out;
+    }
+
+    .button-accept {
+      display: block;
+      padding: 1rem 2.5rem;
+      font-size: 1rem;
+      font-weight: 500;
+      color: white;
+      text-align: center;
+      background-color: #2563EB;
+      border-radius: 0.75rem;
+      transition: all 0.5s ease-in-out;
+    }
+
+    .button-accept:hover {
+      background-color: #1D4ED8;
+    }
+
+    .button-accept:focus,
+    .button-decline:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+    }
+  </style>
+
+  <div class="container">
+    <div class="grid-container">
+      <div class="card">
+        <div class="card-content">
+          <div class="header-text">
+            <span class="security-code">Security code</span>
+            <div class="description">
+              <p>This code expires in 24 hours.</p>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="email" class="sr-only">Email</label>
+            <div class="input-wrapper">
+              <div class="icon">
+                <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
+                </svg>
+              </div>
+              <input type="text" name="email" id="email" class="input">
+            </div>
+          </div>
+
+          <div class="buttons">
+            <div>
+              <button class="button-decline">Decline</button>
+            </div>
+            <div>
+              <button class="button-accept">Accept</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+

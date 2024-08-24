@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,800,900');
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        body.smart2c_ai_body {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+        }
+
+        .search-box-holder {
+            flex: 1;
+            margin-left: 15px;
+            background: linear-gradient(to right, rgb(9, 48, 255), rgb(204, 5, 254));
+            box-shadow: rgb(239, 206, 255) 0px 5px 8.1px -2px;
+            padding: 1px;
+            border-radius: 5px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-holder {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            border-radius: 5px;
+            background: #FFF;
+            padding: 2px;
+        }
+
+        .input-holder input,
+        .input-holder textarea {
+            flex: 1;
+            border-radius: 5px;
+            border: 0;
+            background: none;
+            /* padding: 0 30px; */
+            padding: 10px 15px;
+            outline: 0 !important;
+        }
+
+        input#searchInput:focus-visible {
+            outline: 0 !important;
+        }
+
+        .input-holder button {
+            /* border-radius: 30px; */
+            border: 0;
+            box-shadow: none;
+            font-size: 18px;
+            background: linear-gradient(180deg, #0019FF 0%, #0978FF 100%);
+            color: #fff;
+            padding: 0 15px;
+            font-weight: 300;
+            transform: scale(1);
+            transition: all 0.3s ease-in;
+        }
+
+        .modal {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            overflow: auto;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            border-radius: 5px;
+            padding: 2rem;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
+            position: relative;
+            animation: slide-in 0.3s ease-out;
+        }
+
+        /* Slide-in Animation */
+        @keyframes slide-in {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+
+        /* generic styles */
+
+        #ai_smart2c_-widget-wrapper>div,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        input,
+        p,
+        textarea {
+            margin-block-start: 0;
+            margin-block-end: 0;
+            margin-inline-start: 0;
+            margin-inline-end: 0
+        }
+
+        #ai_smart2c__btn-content {
+            box-sizing: border-box;
+            display: inline-flex;
+            padding: 10px 14px;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            cursor: pointer;
+            font-family: inherit, Roboto
+        }
+
+        #ai_smart2c__btn-content p,
+        svg {
+            box-sizing: border-box;
+            display: inline-block;
+            margin-block-start: 0;
+            margin-block-end: 0;
+            margin-inline-start: 0;
+            margin-inline-end: 0
+        }
+
+        #ai_smart2c__btn-content p {
+            margin-left: 8px !important;
+            font-style: normal;
+            font-size: 14px;
+            line-height: 20px
+        }
+
+        #ai_smart2c__widget-content {
+            width: 350px;
+            background: #fff;
+            box-shadow: 0 0 8px rgba(0, 0, 0, .12);
+            border-radius: 8px;
+            position: relative;
+            font-family: inherit, "Roboto";
+
+        }
+
+        .ai_smart2c__widget-brand-container {
+            display: flex;
+            padding: 20px;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px
+        }
+
+        .ai_smart2c__widget-brand-image {
+            height: 32px;
+            width: 32px;
+            border-radius: 100%;
+            margin-right: 12px
+        }
+
+        .ai_smart2c__widget-brand-info h4 {
+            font-weight: 600;
+            font-size: 16px;
+            color: #333
+        }
+
+        .ai_smart2c__widget-brand-info p {
+            font-size: 12px;
+            margin-block-start: 0;
+            margin-top: 4px;
+            color: #4f4f4f
+        }
+
+        .ai_smart2c__widget-close-btn {
+            cursor: pointer;
+            position: absolute;
+            right: 20px;
+            top: 20px
+        }
+
+        .ai_smart2c__widget-close-btn svg {
+            display: table-row !important
+        }
+
+        #ai_smart2c_-widget-preview .ai_smart2c__widget-close-btn svg {
+            display: none !important
+        }
+
+        .ai_smart2c__widget-message-container {
+            padding: 24px 20px;
+            background-image: url(https://user-images.githubusercontent.com/4735407/153391597-dbe0e13e-7ea8-4d7c-9b5c-66d0400df3d3.png)
+        }
+
+        .ai_smart2c__widget-message {
+            display: inline-block;
+            padding: 12px 16px;
+            background: #fff;
+            box-shadow: 0 0 8px rgba(0, 0, 0, .12);
+            border-radius: 16px;
+            word-wrap: break-word
+        }
+
+        .ai_smart2c__widget-message h4 {
+            color: grey;
+            font-weight: 600;
+            font-size: 12px;
+            margin-bottom: 8px
+        }
+
+        .ai_smart2c__widget-message p {
+            font-size: 14px;
+            color: #1a1a1a;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            max-width: 270px
+        }
+
+        .ai_smart2c__widget-button-container {
+            background: #fff;
+            border-bottom-right-radius: 8px;
+            border-bottom-left-radius: 8px;
+            padding: 20px 20px;
+            display: flex;
+            justify-content: center
+        }
+
+        .ai_smart2c__widget-button {
+            box-sizing: border-box;
+            display: inline-flex;
+            background: #000;
+            padding: 6px 55px;
+            box-shadow: 0 0 8px 1px rgba(0, 0, 0, .12);
+            color: #fff;
+            align-items: center;
+            cursor: pointer
+        }
+
+        .ai_smart2c__widget-button p,
+        svg {
+            box-sizing: border-box;
+            display: inline-block;
+            margin-block-start: 0;
+            margin-block-end: 0;
+            margin-inline-start: 0;
+            margin-inline-end: 0
+        }
+
+        .ai_smart2c__widget-button p {
+            margin-left: 8px !important;
+            font-style: normal;
+            font-size: 14px;
+            line-height: 20px
+        }
+
+        @media only screen and (max-width: 400px) {
+            #ai_smart2c__widget-content {
+                width: 80vw !important
+            }
+        }
+
+        .position-fixed {
+            position: fixed;
+        }
+
+        .position-fixed.left {
+            left: 24px;
+        }
+
+        .position-fixed.right {
+            right: 24px;
+        }
+
+        .position-fixed.top {
+            top: 24px;
+        }
+
+        .position-fixed.bottom {
+            bottom: 24px;
+        }
+    </style>
+</head>
+
+<body class="smart2c_ai_body">
+
+    <div id="elem_position" class="position-fixed ">
+        <div id="ai_smart2c__widget-content">
+            <div class="ai_smart2c__widget-brand-container" style="background: #FBFFC8">
+                <div><img class="ai_smart2c__widget-brand-image" id="brandImg"
+                        src="https://images.unsplash.com/photo-1480241352829-e1573ff2414e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fG1vdW50YWlufGVufDB8fDB8fHww">
+                </div>
+                <div class="ai_smart2c__widget-brand-info">
+                    <h4 style="color: #333333"><span id="brandNameText">BrandName</span></h4>
+                    <p style="color: #4F4F4F">Available</p>
+                </div>
+                <div class="ai_smart2c__widget-close-btn" id="ai_smart2c_-widget-close-btn">
+                    <svg height="12" width="12" viewport="0 0 12 12" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                        <line x1="1" y1="11" x2="11" y2="1" stroke="black" stroke-width="2"></line>
+                        <line x1="1" y1="1" x2="11" y2="11" stroke="black" stroke-width="2"></line>
+                    </svg>
+                </div>
+            </div>
+            <div class="ai_smart2c__widget-message-container">
+                <div class="ai_smart2c__widget-message">
+                    <h4><span id="brandNameText">BrandName</span></h4>
+                    <p><span id="welcomeMsg">welcome</span></p>
+                </div>
+            </div>
+            <div class="ai_smart2c__widget-button-container">
+                <div class="ai_smart2c__widget-button" id="ai_smart2c_-widget-button"
+                    style="background: #1A1A1A; padding: ; border-radius: 40px">
+                    <!-- <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M18.1225 14.9458C17.8183 14.7895 16.3033 14.0473 16.0215 13.9469C15.7397 13.8409 15.5332 13.7907 15.3295 14.1032C15.123 14.4129 14.5371 15.102 14.3529 15.3113C14.1744 15.5178 13.993 15.5429 13.6889 15.3894C11.8808 14.4854 10.695 13.7767 9.50361 11.7315C9.18832 11.1874 9.8189 11.2265 10.4076 10.0518C10.5081 9.84534 10.4578 9.66956 10.3797 9.51331C10.3016 9.35706 9.68776 7.84478 9.43106 7.22815C9.18274 6.62826 8.92604 6.71197 8.7391 6.70081C8.56053 6.68965 8.35684 6.68965 8.15037 6.68965C7.9439 6.68965 7.61187 6.76777 7.33006 7.0719C7.04825 7.38161 6.25305 8.12659 6.25305 9.63887C6.25305 11.1511 7.35517 12.616 7.50584 12.8225C7.66209 13.0289 9.67381 16.1316 12.7625 17.4681C14.7157 18.3107 15.4802 18.3833 16.4567 18.2382C17.051 18.1489 18.2759 17.496 18.5298 16.7734C18.7837 16.0535 18.7837 15.4369 18.7084 15.3085C18.6331 15.1718 18.4266 15.0937 18.1225 14.9458Z"
+                            fill="white"></path>
+                        <path
+                            d="M24.0292 7.65625C23.3986 6.15792 22.4946 4.81306 21.3422 3.65792C20.198 2.50948 18.8395 1.5966 17.3439 0.970982C15.8093 0.326451 14.1798 0 12.5002 0H12.4444C10.7535 0.00837054 9.11567 0.343192 7.57549 1.00167C6.09267 1.63371 4.74699 2.54821 3.61344 3.6942C2.47226 4.84654 1.57661 6.18583 0.95719 7.67857C0.315449 9.22433 -0.00821224 10.8677 0.000158294 12.5586C0.00962607 14.4963 0.468048 16.4054 1.33944 18.1362V22.3772C1.33944 22.7176 1.47467 23.0441 1.71537 23.2848C1.95607 23.5255 2.28253 23.6607 2.62293 23.6607H6.86679C8.59752 24.5321 10.5067 24.9905 12.4444 25H12.5029C14.1743 25 15.7954 24.6763 17.3216 24.043C18.8097 23.4248 20.163 22.5226 21.306 21.3867C22.4583 20.2455 23.3651 18.9118 23.9985 17.4247C24.657 15.8845 24.9918 14.2467 25.0002 12.5558C25.0085 10.8566 24.6793 9.20759 24.0292 7.65625ZM19.8132 19.8772C17.8573 21.8136 15.2624 22.8795 12.5002 22.8795H12.4527C10.7702 22.8711 9.09893 22.4526 7.62293 21.6657L7.38855 21.5402H3.45998V17.6116L3.33442 17.3772C2.54759 15.9012 2.12906 14.2299 2.12069 12.5474C2.10953 9.76562 3.17259 7.15402 5.12293 5.18694C7.07047 3.21987 9.67371 2.1317 12.4555 2.12054H12.5029C13.898 2.12054 15.2513 2.39118 16.5264 2.9269C17.7708 3.44866 18.8869 4.19922 19.8467 5.15904C20.8037 6.11607 21.5571 7.23493 22.0788 8.47935C22.6201 9.76841 22.8908 11.1356 22.8852 12.5474C22.8685 15.3265 21.7775 17.9297 19.8132 19.8772Z"
+                            fill="white"></path>
+                    </svg> -->
+                    <p style="color: white; margin-left:">
+                        <span id="buttonMsg_Area">buttonMsg</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <!-- <div class="ai_smart2c__widget-brand-container">
+                <h5>Let's Talk to AI Engine</h5>
+            </div>
+     -->
+            <div class="search-box-holder" style="margin-bottom: 2rem;">
+                <div class="input-holder d-flex">
+                    <textarea id="searchInput" class="text" placeholder="Ask your question"></textarea>
+                    <button id="generateWithAI" class="d-flex align-items-center">
+                        <svg width="17" height="15" viewBox="0 0 17 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M8.68089 13.2623L8.68089 13.2623C9.23171 13.1543 9.23171 12.3802 8.68089 12.2722L8.68089 12.2722L8.46753 12.2304C8.46753 12.2304 8.46753 12.2304 8.46753 12.2304C8.02444 12.1436 7.68502 11.8107 7.5975 11.3935C7.5975 11.3935 7.5975 11.3935 7.5975 11.3935L7.55425 11.1873L7.55425 11.1873C7.49699 10.9143 7.26142 10.7845 7.05125 10.7845C6.84107 10.7845 6.6055 10.9143 6.54824 11.1873L6.54824 11.1873L6.50499 11.3935C6.50499 11.3935 6.50499 11.3935 6.50499 11.3935C6.41747 11.8107 6.07805 12.1436 5.63497 12.2304C5.63496 12.2304 5.63496 12.2304 5.63496 12.2304L5.42161 12.2722L5.4216 12.2722C4.87078 12.3802 4.87078 13.1543 5.4216 13.2623L5.42161 13.2623L5.63496 13.3041C6.07805 13.3909 6.41747 13.7238 6.50499 14.141C6.50499 14.141 6.50499 14.141 6.50499 14.141L6.54824 14.3472L6.54824 14.3472C6.6055 14.6202 6.84107 14.75 7.05125 14.75C7.26142 14.75 7.49699 14.6202 7.55425 14.3472L7.55425 14.3472L7.5975 14.141C7.5975 14.141 7.5975 14.141 7.5975 14.141C7.68502 13.7238 8.02444 13.3909 8.46753 13.3041C8.46753 13.3041 8.46753 13.3041 8.46753 13.3041L8.68089 13.2623Z"
+                                fill="white" stroke="white" stroke-width="0.5"></path>
+                            <path
+                                d="M8.74517 5.06732L8.74518 5.06731C9.49654 4.92004 9.49654 3.86891 8.74518 3.72164L8.74517 3.72164L7.72386 3.52151C6.81187 3.3428 6.10598 2.65573 5.92339 1.7853L5.71633 0.798181L5.71633 0.798167C5.63873 0.428296 5.32136 0.25 5.02935 0.25C4.73734 0.25 4.41997 0.428296 4.34237 0.798167L4.34237 0.798181L4.13531 1.7853C4.13531 1.7853 4.13531 1.7853 4.13531 1.78531C3.95272 2.65573 3.24684 3.3428 2.33484 3.52151C2.33484 3.52151 2.33484 3.52151 2.33484 3.52151L1.31353 3.72164L1.31352 3.72164C0.562159 3.86891 0.562161 4.92004 1.31352 5.06731L1.31353 5.06732L2.33484 5.26744C3.24684 5.44616 3.95272 6.13322 4.13531 7.00365L4.34237 7.99077L4.34237 7.99079C4.41997 8.36066 4.73734 8.53895 5.02935 8.53895C5.32136 8.53895 5.63873 8.36066 5.71633 7.99079L5.71633 7.99077L5.92339 7.00365L5.92339 7.00365C6.10595 6.13324 6.81185 5.4462 7.72386 5.26744C7.72386 5.26744 7.72386 5.26744 7.72387 5.26744L8.74517 5.06732Z"
+                                fill="white" stroke="white" stroke-width="0.5"></path>
+                            <path
+                                d="M14.9379 8.45681L14.986 8.70214C14.3076 8.83509 13.7842 9.34578 13.6489 9.9905L14.9379 8.45681ZM14.9379 8.45681L14.986 8.70214L15.7704 8.54843C15.7704 8.54843 15.7704 8.54843 15.7704 8.54843C16.4099 8.42312 16.4099 7.52645 15.7704 7.40114C15.7704 7.40114 15.7704 7.40114 15.7704 7.40114L14.986 7.24743C14.3075 7.11445 13.7842 6.60381 13.6489 5.95908L13.6489 5.95907M14.9379 8.45681L13.6489 5.95907M10.8251 8.70214C10.8251 8.70214 10.8251 8.70214 10.8251 8.70214C11.5036 8.83512 12.0269 9.34576 12.1622 9.99049L12.1622 9.9905L12.3212 10.7486C12.3212 10.7486 12.3212 10.7486 12.3212 10.7486C12.3875 11.0644 12.6592 11.2157 12.9056 11.2157C13.1519 11.2157 13.4237 11.0644 13.4899 10.7486C13.4899 10.7486 13.4899 10.7486 13.4899 10.7486L13.6489 9.99051L10.8731 8.45681L10.8251 8.70214ZM10.8251 8.70214L10.0407 8.54843M10.8251 8.70214L10.0407 8.54843M10.0407 8.54843C10.0407 8.54843 10.0407 8.54843 10.0407 8.54843M10.0407 8.54843L10.0407 8.54843M13.6489 5.95907L13.4899 5.20099C13.4899 5.20099 13.4899 5.20099 13.4899 5.20098C13.4236 4.88516 13.1519 4.73389 12.9055 4.73389C12.6592 4.73389 12.3874 4.88516 12.3212 5.20098C12.3212 5.20099 12.3212 5.201 12.3212 5.20101M13.6489 5.95907L12.3212 5.20101M10.8251 7.24743L10.8251 7.24743C11.5036 7.11448 12.0269 6.60382 12.1622 5.95907C12.1622 5.95907 12.1622 5.95907 12.1622 5.95907M10.8251 7.24743L12.1622 5.95907M10.8251 7.24743L10.0407 7.40114M10.8251 7.24743L10.0407 7.40114M12.1622 5.95907L12.3212 5.20101M12.1622 5.95907L12.3212 5.20101M10.0407 7.40114C10.0407 7.40114 10.0407 7.40114 10.0407 7.40114M10.0407 7.40114L10.0407 7.40114M10.0407 7.40114C9.4012 7.52645 9.4012 8.42311 10.0407 8.54843M10.0407 7.40114L10.0407 8.54843"
+                                fill="white" stroke="white" stroke-width="0.5"></path>
+                        </svg>
+
+                    </button>
+                </div>
+            </div>
+
+            <button class="close ai_smart2c__widget-button" style="background: #1A1A1A;
+            border-radius: 40px;
+            padding: 0.7rem 2.1rem;
+            border: 0;
+            margin: auto;
+            float: inline-end;">Close</button>
+        </div>
+    </div>
+
+    <script>
+        const data = {
+            brandName: "BrandName",
+            brandLogo: "https://images.unsplash.com/photo-1602233158242-3ba0ac4d2167?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8c21hcnQlMjBnaXJsfGVufDB8fDB8fHww",
+            welcome: "Hi there! I can help you resolve your queries and suggest best products personalised for you",
+            buttonMsg: "Ask AI Engine",
+            elementPosition: "bottom left"
+        }
+
+        const buttonMsgAreas = document.querySelectorAll("#buttonMsg_Area");
+        buttonMsgAreas.forEach(element => {
+            element.textContent = data.buttonMsg;
+        });
+
+        const BrandNameAreas = document.querySelectorAll("#brandNameText");
+        BrandNameAreas.forEach(element => {
+            element.textContent = data.brandName;
+        });
+
+        const brandLogoAreas = document.querySelectorAll("#brandImg");
+        brandLogoAreas.forEach(element => {
+            element.src = data.brandLogo;
+        });
+
+        const welcomeAreas = document.querySelectorAll("#welcomeMsg");
+        welcomeAreas.forEach(element => {
+            element.textContent = data.welcome;
+        });
+
+        const elemPosition = document.querySelector("#elem_position"); // Use querySelector to get a single element
+        elemPosition.classList = "position-fixed " + (data.elementPosition ?? "");
+
+
+        const modal = document.getElementById("myModal");
+        const btn = document.getElementById("ai_smart2c_-widget-button");
+        const span = document.getElementsByClassName("close")[0];
+
+        btn.onclick = function () {
+            //   modal.style.display = "block";
+            modal.style.display = "flex";
+            modal.style.justifyContent = "center";
+            modal.style.alignItems = "center";
+        }
+
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+
+        // window.onclick = function(event) {
+        //   if (event.target == modal) {
+        //     modal.style.display = "none";
+        //   }
+        // }
+
+    </script>
+</body>
+
+</html>

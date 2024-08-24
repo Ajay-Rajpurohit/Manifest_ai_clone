@@ -1,0 +1,68 @@
+<<--- 1 --->>
+
+Provide JSON Response such that there are 100 keywords (words only, no space) in array. product name is "Blueberry Lemonade Kombucha" and product desription is "Discover the refreshing and revitalizing power of SLAY Crafted Kombucha. Made with natural flavors like blueberry and lemonade, as well as nostalgic favorites with a healthy twist, this probiotic powerhouse is packed with good bacteria for your gut health. Indulge in its low sugar content and enjoy its energizing benefits without guilt. Handcrafted in small batches with care and attention to detail, SLAY Crafted Kombucha is the perfect companion for any occasion, turning ordinary moments into extraordinary memories.". suggest keywords considering India.
+
+Please consider various topic such as Price Sensitivity, brand name, Mood (Happy, stressed, tired, refreshed),Social Setting(Alone, with friends, with family),Activity(Workout, yoga, hiking, studying), Weather(Hot, cold, rainy), Season (Summer, spring, fall, winter), Occasion ()Party, picnic, brunch, relaxation), Time of Day (Morning, afternoon, evening),Lifestyle, Values, Attitudes ( Open-minded, skeptical, health-conscious), List of Interests for which people would buy (Fitness, wellness, food, travel, etc.), Occupation( Student, professional, homemaker ), Location, Gender, Age (Young adults, adults, seniors), Flavor Profile (Sweet, tart, fruity, refreshing, tangy,) Ingredients (Organic, natural, low sugar, vegan, gluten-free,) Health Benefits( Probiotics, antioxidants, gut health, immunity boost,) Carbonation Level (Light, medium, strong, Alcohol) Content (Non-alcoholic, low-alcohol), Packaging (Glass bottle, can, plastic bottle,) Certifications (Organic, Fairtrade, Kosher), Region like Coastal, inland, mountainous, Climate such as Tropical, temperate, cold, Locality, Influences taste preferences, Cultural Factors, consumption habits, Similar products, competitive analysis, Tailored recommendations based on preferences, Vegan, gluten-free, keto-friendly, Diabetes, digestive issues, Demographics, psychographics, behavior, Understand customer behavior, Identify patterns and trends, Style( Athletic, casual, trendy, minimalist), Fabric( Cotton, polyester, spandex, nylon, bamboo), Fit( Tight, loose, compression, relaxed), Color( Solid, patterned, bright, pastel), Design( Basic, embellished, functional), Features( Moisture-wicking, breathable, quick-drying, supportive), Price Point( Budget, mid-range, luxury), Lifestyle (Active, sedentary, health-conscious), Body Type (Slim, athletic, curvy, plus-size), Performance, comfort, style, ethics,  Health-conscious, environmentally friendly, body positive, Weight loss, flexibility, strength, Style, color, pattern and also very important keywords related to product as per title and description
+
+Example:
+[{
+  productName: "Blueberry Lemonade Kombucha",
+  keyWords: ["Blueberry", "Lemonade", "Kombucha"]
+}]
+
+<<--- 2 --->>
+
+const stopWords = [
+    "a", "about", "above", "after", "again", "against", "all", "am", "an", "and", "any", "are", "aren't", "as", 
+    "at", "be", "because", "been", "before", "being", "below", "between", "both", "but", "by", "can't", "cannot", 
+    "could", "couldn't", "did", "didn't", "do", "does", "doesn't", "doing", "don't", "down", "during", "each", 
+    "few", "for", "from", "further", "had", "hadn't", "has", "hasn't", "have", "haven't", "having", "he", "he'd", 
+    "he'll", "he's", "her", "here", "here's", "hers", "herself", "him", "himself", "his", "how", "how's", "i", 
+    "i'd", "i'll", "i'm", "i've", "if", "in", "into", "is", "isn't", "it", "it's", "its", "itself", "let's", 
+    "me", "more", "most", "mustn't", "my", "myself", "no", "nor", "not", "of", "off", "on", "once", "only", 
+    "or", "other", "ought", "our", "ours", "ourselves", "out", "over", "own", "same", "shan't", "she", "she'd", 
+    "she'll", "she's", "should", "shouldn't", "so", "some", "such", "than", "that", "that's", "the", "their", 
+    "theirs", "them", "themselves", "then", "there", "there's", "these", "they", "they'd", "they'll", "they're", 
+    "they've", "this", "those", "through", "to", "too", "under", "until", "up", "very", "was", "wasn't", 
+    "we", "we'd", "we'll", "we're", "we've", "were", "weren't", "what", "what's", "when", "when's", "where", 
+    "where's", "which", "while", "who", "who's", "whom", "why", "why's", "with", "won't", "would", "wouldn't", 
+    "you", "you'd", "you'll", "you're", "you've", "your", "yours", "yourself", "yourselves", "a's", "able", 
+    "about's", "above's", "according", "accordingly", "across", "actually", "afterward", "afterwards", "ain't", 
+    "allow", "allows", "almost", "alone", "along", "already", "also", "although", "always", "among", "amongst", 
+    "anybody", "anyhow", "anyone", "anything", "anyway", "anyways", "anywhere", "apart", "appear", "appreciate", 
+    "appropriate", "aren't", "around", "aside", "ask", "asking", "associated", "at's", "available", "away", 
+    "awfully"
+];
+
+const moreStopWords = [ "well", "Discover", "enjoy", "without", "detail" ];
+
+const description = "Discover the refreshing and revitalizing power of SLAY Crafted Kombucha. Made with natural flavors like blueberry and lemonade, as well as nostalgic favorites with a healthy twist, this probiotic powerhouse is packed with good bacteria for your gut health. Indulge in its low sugar content and enjoy its energizing benefits without guilt. Handcrafted in small batches with care and attention to detail, SLAY Crafted Kombucha is the perfect companion for any occasion, turning ordinary moments into extraordinary memories.";
+
+const keys = [];
+
+description.split(" ").map((e) => {
+    // Remove punctuation and convert to lowercase
+    const cleanWord = e.replace(/[.,!?:;]/g, "").toLowerCase();
+    if (!stopWords.includes(cleanWord) && !moreStopWords.includes(cleanWord)) {
+        keys.push(cleanWord);
+    }
+});
+
+console.log("keys", keys);
+
+<<--- 3 --->>
+can you give json as below for 25 question (intents) which people generally ask during buying products online on d2c website. please provide 10 alternateWayOfQuestion and 10 sampleAnswers for each
+
+[{
+  question: "Can you please provide me support contact details",
+  intent: "support contact",
+  alternateWayOfQuestion: [
+    "share me details whom to ask for help",
+    "more details on how to get support",
+    "I need phone number to call"
+    ],
+    sampleAnswers: [
+      "Hi, Here is our amazing team which can help you in support, you can call 919191 or email to support@example.com",
+      "Thanks for enquiry, pleassse call us at 919191 or email at support@example.com"
+      ]
+}]
